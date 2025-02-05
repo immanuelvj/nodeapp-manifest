@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: node-app
+        image: 869935095777.dkr.ecr.us-east-1.amazonaws.com/node-app
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: nodejs-app-config
